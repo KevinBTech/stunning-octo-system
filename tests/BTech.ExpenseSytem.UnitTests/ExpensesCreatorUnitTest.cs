@@ -19,7 +19,7 @@ namespace BTech.ExpenseSytem.UnitTests
 
             var result = await creator.ExecuteAsync(new NewExpense(
                 DateTimeOffset.UtcNow
-                , 20
+                , new Amount(10)
                 , identityId));
 
             Assert.IsType<ExpenseCreated>(result);

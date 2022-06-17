@@ -19,7 +19,7 @@ namespace BTech.ExpenseSystem.Domain.UseCases
             var expenseToAdd = new Expense()
             {
                 Id = Guid.NewGuid().ToString(),
-                Amount = newExpense.Amount,
+                Amount = newExpense.Amount.Value,
                 OperationDate = newExpense.OperationDate,
                 IdentityId = newExpense.IdentityId
             };
