@@ -20,6 +20,7 @@ namespace BTech.ExpenseSystem.Domain.UseCases
             {
                 Id = Guid.NewGuid().ToString(),
                 Amount = newExpense.Amount.Value,
+                Currency = newExpense.Amount.Currency,
                 OperationDate = newExpense.OperationDate,
                 IdentityId = newExpense.IdentityId
             };
