@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\BTech.ExpenseSystem.Domain\BTech.ExpenseSystem.Domain.csproj" />
+    <ProjectReference Include="..\..\src\BTech.ExpenseSystem.Infrastructure\BTech.ExpenseSystem.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

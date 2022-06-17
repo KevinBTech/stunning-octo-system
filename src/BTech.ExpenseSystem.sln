@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTech.ExpenseSytem.UnitTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BTech.ExpenseSystem.Domain", "BTech.ExpenseSystem.Domain\BTech.ExpenseSystem.Domain.csproj", "{A4CED649-EF2D-449D-B716-877513213203}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BTech.ExpenseSystem.Infrastructure", "BTech.ExpenseSystem.Infrastructure\BTech.ExpenseSystem.Infrastructure.csproj", "{8734B8C5-B922-477D-8F9A-008D449594EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{A4CED649-EF2D-449D-B716-877513213203}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4CED649-EF2D-449D-B716-877513213203}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4CED649-EF2D-449D-B716-877513213203}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8734B8C5-B922-477D-8F9A-008D449594EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8734B8C5-B922-477D-8F9A-008D449594EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8734B8C5-B922-477D-8F9A-008D449594EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8734B8C5-B922-477D-8F9A-008D449594EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +45,7 @@ Global
 		{CF63DD55-BC1E-46C4-8331-D42DF77ADA73} = {9C73E433-09A2-4ECA-8EB4-BF093ACCF9F1}
 		{506FF395-2B7B-48FE-ABE9-EEF5309202BB} = {D5780FE7-9D11-4C5E-8DB9-3CBB3043AF41}
 		{A4CED649-EF2D-449D-B716-877513213203} = {9C73E433-09A2-4ECA-8EB4-BF093ACCF9F1}
+		{8734B8C5-B922-477D-8F9A-008D449594EC} = {9C73E433-09A2-4ECA-8EB4-BF093ACCF9F1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {082CA75A-9099-48E8-B389-CBC2ABD3E504}
