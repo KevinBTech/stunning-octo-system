@@ -7,10 +7,10 @@ namespace BTech.ExpenseSystem.Infrastructure.DependenciesInjection
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddRepositories(this IServiceCollection services)
+        public static IServiceCollection AddRepositories(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<ExpenseSystemContext>(
-                options => options.UseInMemoryDatabase("ExpenseSystem"))
+                options => options.UseSqlServer(connectionString))
                 .AddScoped<ExpenseSystemContext>()
 
                 .AddScoped(typeof(IWriteRepository<>), typeof(EfRepository<>))

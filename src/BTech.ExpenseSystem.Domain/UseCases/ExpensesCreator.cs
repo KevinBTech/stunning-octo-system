@@ -35,7 +35,7 @@ namespace BTech.ExpenseSystem.Domain.UseCases
             }
 
             if (!_readUsersRepository.Entities
-                .Any(u => newExpense.IdentityId == string.Concat(u.FirstName, " ", u.LastName)))
+                .Any(u => newExpense.IdentityId == u.Id))
             {
                 return new IdentityUnknown($"The user '{newExpense.IdentityId}' is unkown.");
             }
