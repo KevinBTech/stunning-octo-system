@@ -14,6 +14,8 @@ namespace BTech.ExpenseSystem.WebAPI.Contracts
         [Required]
         public string Currency { get; set; } = null!;
 
+        public string Nature { get; set; } = null!;
+
         [Required]
         public string IdentityId { get; set; } = null!;
     }

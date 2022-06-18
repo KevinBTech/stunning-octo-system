@@ -8,7 +8,7 @@
     {
     }
 
-    public sealed record NewExpenseInError() : IExpenseEvent
+    public sealed record NatureNotFound(string Message) : IExpenseEvent
     {
     }
 }
