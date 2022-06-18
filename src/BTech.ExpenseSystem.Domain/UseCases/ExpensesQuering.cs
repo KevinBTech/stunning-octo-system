@@ -1,4 +1,5 @@
 ﻿using BTech.ExpenseSystem.Domain.Entities;
+using BTech.ExpenseSystem.Domain.Queries;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,7 +18,10 @@ namespace BTech.ExpenseSystem.Domain.UseCases
         {
             var existingExpenses = new List<ExistingExpense>();
 
-            foreach (Expense expense in _readExpensesRepository.Entities.ToList())
+            var queryBuilder = new ExpensesQueryBuilder(_readExpensesRepository)
+                .FromIdentity(expensesSearch.IdentityId);
+
+            foreach (Expense expense in queryBuilder.Build().ToList())
             {
                 existingExpenses.Add(new ExistingExpense(
                     expense.OperationDate,
