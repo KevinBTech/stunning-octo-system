@@ -20,4 +20,8 @@
     public sealed record CommentIsMandatory(string Message) : IExpenseToCreateInErrorEvent
     {
     }
+
+    public sealed record IdentityUnknown(string Message) : IExpenseToCreateInErrorEvent
+    {
+    }
 }

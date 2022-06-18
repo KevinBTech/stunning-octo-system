@@ -10,7 +10,7 @@ using Microsoft.OpenApi.Models;
 
 namespace BTech.ExpenseSystem.WebAPI
 {
-    public class Startup
+    public sealed class Startup
     {
         public Startup(IConfiguration configuration)
         {

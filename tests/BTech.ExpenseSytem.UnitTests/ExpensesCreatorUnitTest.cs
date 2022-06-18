@@ -14,8 +14,17 @@ namespace BTech.ExpenseSytem.UnitTests
         [Fact]
         public async Task Execute_NewExpense_MustBeCreated()
         {
-            var repository = new InMemoryRepository<Expense>();
-            var creator = new ExpensesCreator(repository);
+            var userRepository = new InMemoryRepository<User>();
+            await userRepository.AddAsync(new User()
+            {
+                Id = "Harry Potter",
+                FirstName = "Harry",
+                LastName = "Potter",
+                Currency = "Witch money"
+            });
+            var creator = new ExpensesCreator(
+                new InMemoryRepository<Expense>()
+                , userRepository);
             string identityId = "Harry Potter";
 
             var result = await creator.ExecuteAsync(new NewExpense(
@@ -31,8 +40,9 @@ namespace BTech.ExpenseSytem.UnitTests
         [Fact]
         public async Task Execute_NewExpense_Without_ExistingNature_MustNotBeCreated()
         {
-            var repository = new InMemoryRepository<Expense>();
-            var creator = new ExpensesCreator(repository);
+            var creator = new ExpensesCreator(
+                new InMemoryRepository<Expense>()
+                , new InMemoryRepository<User>());
             string identityId = "Harry Potter";
 
             var result = await creator.ExecuteAsync(new NewExpense(
@@ -48,8 +58,9 @@ namespace BTech.ExpenseSytem.UnitTests
         [Fact]
         public async Task Execute_NewExpense_Without_Comment_MustNotBeCreated()
         {
-            var repository = new InMemoryRepository<Expense>();
-            var creator = new ExpensesCreator(repository);
+            var creator = new ExpensesCreator(
+                new InMemoryRepository<Expense>()
+                , new InMemoryRepository<User>());
             string identityId = "Harry Potter";
 
             var result = await creator.ExecuteAsync(new NewExpense(
@@ -60,6 +71,24 @@ namespace BTech.ExpenseSytem.UnitTests
                 , identityId));
 
             Assert.IsType<CommentIsMandatory>(result);
+        }
+
+        [Fact]
+        public async Task Execute_NewExpense_Without_KownIdentity_MustNotBeCreated()
+        {
+            var creator = new ExpensesCreator(
+                new InMemoryRepository<Expense>()
+                , new InMemoryRepository<User>());
+            string identityId = "Harry Potter";
+
+            var result = await creator.ExecuteAsync(new NewExpense(
+                DateTimeOffset.UtcNow
+                , new Amount(10, null)
+                , "Misc"
+                , "Sperooooooo patronuuuuuuuuuuuuum "
+                , identityId));
+
+            Assert.IsType<IdentityUnknown>(result);
         }
     }
 }
