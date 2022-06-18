@@ -11,14 +11,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{D5780FE7-9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTech.ExpenseSytem.UnitTests", "..\tests\BTech.ExpenseSytem.UnitTests\BTech.ExpenseSytem.UnitTests.csproj", "{506FF395-2B7B-48FE-ABE9-EEF5309202BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BTech.ExpenseSystem.Domain", "BTech.ExpenseSystem.Domain\BTech.ExpenseSystem.Domain.csproj", "{A4CED649-EF2D-449D-B716-877513213203}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTech.ExpenseSystem.Domain", "BTech.ExpenseSystem.Domain\BTech.ExpenseSystem.Domain.csproj", "{A4CED649-EF2D-449D-B716-877513213203}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BTech.ExpenseSystem.Infrastructure", "BTech.ExpenseSystem.Infrastructure\BTech.ExpenseSystem.Infrastructure.csproj", "{8734B8C5-B922-477D-8F9A-008D449594EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTech.ExpenseSystem.Infrastructure", "BTech.ExpenseSystem.Infrastructure\BTech.ExpenseSystem.Infrastructure.csproj", "{8734B8C5-B922-477D-8F9A-008D449594EC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{89C3A3EB-AABF-42FC-A47D-0BDEF11D051E}"
 	ProjectSection(SolutionItems) = preProject
 		..\.gitignore = ..\.gitignore
 		..\.github\workflows\ci.yml = ..\.github\workflows\ci.yml
+		..\compose.yml = ..\compose.yml
+		..\web.Dockerfile = ..\web.Dockerfile
 	EndProjectSection
 EndProject
 Global

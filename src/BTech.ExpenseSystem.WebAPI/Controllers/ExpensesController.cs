@@ -3,6 +3,7 @@ using BTech.ExpenseSystem.Domain.UseCases;
 using BTech.ExpenseSystem.WebAPI.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BTech.ExpenseSystem.WebAPI.Controllers
@@ -12,11 +13,14 @@ namespace BTech.ExpenseSystem.WebAPI.Controllers
     public class ExpensesController : ControllerBase
     {
         private readonly ExpensesCreator _expensesCreator;
+        private readonly ExpensesQuering _expensesQuering;
 
         public ExpensesController(
-            ExpensesCreator expensesCreator)
+            ExpensesCreator expensesCreator
+            , ExpensesQuering expensesQuering)
         {
             _expensesCreator = expensesCreator;
+            _expensesQuering = expensesQuering;
         }
 
         /// <summary>
@@ -43,6 +47,36 @@ namespace BTech.ExpenseSystem.WebAPI.Controllers
                 IExpenseToCreateInErrorEvent expenseToCreateInErrorEvent => BadRequest(expenseToCreateInErrorEvent.Message),
                 _ => BadRequest(),
             };
+        }
+
+        /// <summary>
+        /// List existing expenses from search.
+        /// </summary>
+        /// <param name="expensesFilter"><see cref="ExpensesSearch"/></param>
+        [HttpGet]
+        public ActionResult<ExpensesList> Get(
+            [Required][FromQuery] ExpensesFilter expensesFilter)
+        {
+            var existingExpenses = _expensesQuering.ListFrom(new ExpensesSearch()
+            {
+                IdentityId = expensesFilter.IdentityId
+            });
+
+            var expensesList = new ExpensesList
+            {
+                Expenses = existingExpenses.Select(e =>
+                new Expense()
+                {
+                    OperationDate = e.OperationDate,
+                    Amount = e.Amount.Value,
+                    Currency = e.Amount.Currency,
+                    Comment = e.Comment,
+                    IdentityId = e.IdentityId,
+                    Nature = e.Nature
+                })
+            };
+
+            return expensesList;
         }
     }
 }

@@ -47,7 +47,7 @@ namespace BTech.ExpenseSystem.Domain.UseCases
                 Currency = newExpense.Amount.Currency,
                 OperationDate = newExpense.OperationDate,
                 Nature = parsedNature.ToString(),
-                Comment = parsedNature.ToString(),
+                Comment = newExpense.Comment,
                 IdentityId = newExpense.IdentityId
             };
 

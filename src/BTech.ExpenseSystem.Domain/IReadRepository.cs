@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace BTech.ExpenseSystem.Domain.UseCases
 {
-    public interface IReadRepository<TEntity>
+    public interface IReadRepository<out TEntity>
     {
         IQueryable<TEntity> Entities { get; }
     }

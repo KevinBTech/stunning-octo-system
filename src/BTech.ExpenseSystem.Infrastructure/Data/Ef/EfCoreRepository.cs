@@ -22,6 +22,7 @@ namespace BTech.ExpenseSystem.Infrastructure.Data
         public async Task AddAsync(TEntity entity)
         {
             await _context.Set<TEntity>().AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
     }
 }
