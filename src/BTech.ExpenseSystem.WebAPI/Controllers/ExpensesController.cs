@@ -32,6 +32,7 @@ namespace BTech.ExpenseSystem.WebAPI.Controllers
                     expenseToCreate.Amount
                     , expenseToCreate.Currency)
                 , expenseToCreate.Nature
+                , expenseToCreate.Comment
                 , expenseToCreate.IdentityId);
 
             var @event = await _expensesCreator.ExecuteAsync(newExpense);

@@ -28,6 +28,12 @@ namespace BTech.ExpenseSystem.WebAPI.Contracts
         public string Currency { get; set; } = null!;
 
         /// <summary>
+        /// The associated comment.
+        /// </summary>
+        [Required]
+        public string Comment { get; set; } = null!;
+
+        /// <summary>
         /// The nature of the expense.
         /// </summary>
         public string Nature { get; set; } = ExpenseNature.Misc.ToString();
