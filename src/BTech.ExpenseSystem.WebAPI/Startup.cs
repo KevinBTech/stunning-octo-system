@@ -1,3 +1,6 @@
+using BTech.ExpenseSystem.Domain.UseCases;
+using BTech.ExpenseSystem.Infrastructure.DependenciesInjection;
+using BTech.ExpenseSystem.WebAPI.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,6 +27,9 @@ namespace BTech.ExpenseSystem.WebAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Expenses System", Version = "v1" });
             });
+
+            services.AddScoped<ExpensesCreator>();
+            services.AddRepositories();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
