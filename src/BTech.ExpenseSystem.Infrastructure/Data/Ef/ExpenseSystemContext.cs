@@ -23,27 +23,27 @@ namespace BTech.ExpenseSystem.Infrastructure.Data
             modelBuilder.ApplyConfiguration(new ExpenseMapping());
             modelBuilder.ApplyConfiguration(new UserMapping());
 
-            SeedFixtures();
+            SeedFixtures(modelBuilder);
         }
 
-        private void SeedFixtures()
+        private void SeedFixtures(ModelBuilder modelBuilder)
         {
-            Users.Add(new User()
-            {
-                Id = Guid.NewGuid().ToString(),
-                FirstName = "Anthony",
-                LastName = "Stark",
-                Currency = "USD"
-            });
-            Users.Add(new User()
-            {
-                Id = Guid.NewGuid().ToString(),
-                FirstName = "Natasha",
-                LastName = "Romanova",
-                Currency = "RUB"
-            });
-
-            SaveChanges();
+            modelBuilder.Entity<User>()
+                .HasData(new User()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    FirstName = "Anthony",
+                    LastName = "Stark",
+                    Currency = "USD"
+                });
+            modelBuilder.Entity<User>()
+                .HasData(new User()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    FirstName = "Natasha",
+                    LastName = "Romanova",
+                    Currency = "RUB"
+                });
         }
     }
 }

@@ -37,7 +37,7 @@ namespace BTech.ExpenseSystem.Domain.UseCases
             if (!_readUsersRepository.Entities
                 .Any(u => newExpense.IdentityId == string.Concat(u.FirstName, " ", u.LastName)))
             {
-                return new IdentityUnknown($"The user {newExpense.IdentityId} is unkown.");
+                return new IdentityUnknown($"The user '{newExpense.IdentityId}' is unkown.");
             }
 
             var expenseToAdd = new Expense()

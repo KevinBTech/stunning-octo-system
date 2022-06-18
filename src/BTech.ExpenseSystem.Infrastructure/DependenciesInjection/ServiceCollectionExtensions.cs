@@ -10,9 +10,13 @@ namespace BTech.ExpenseSystem.Infrastructure.DependenciesInjection
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddDbContext<ExpenseSystemContext>(
-                options => options.UseInMemoryDatabase("ExpenseSystem"));
-            services.AddScoped<ExpenseSystemContext>();
-            return services.AddScoped(typeof(IWriteRepository<>), typeof(EfRepository<>));
+                options => options.UseInMemoryDatabase("ExpenseSystem"))
+                .AddScoped<ExpenseSystemContext>()
+
+                .AddScoped(typeof(IWriteRepository<>), typeof(EfRepository<>))
+                .AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
+
+            return services;
         }
     }
 }
