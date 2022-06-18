@@ -2,6 +2,7 @@
 using BTech.ExpenseSystem.Domain.Enums;
 using BTech.ExpenseSystem.Domain.Events;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BTech.ExpenseSystem.Domain.UseCases
@@ -9,10 +10,13 @@ namespace BTech.ExpenseSystem.Domain.UseCases
     public sealed class ExpensesCreator
     {
         private readonly IWriteRepository<Expense> _writeExpensesRepository;
+        private readonly IReadRepository<User> _readUsersRepository;
 
-        public ExpensesCreator(IWriteRepository<Expense> writeExpensesRepository)
+        public ExpensesCreator(IWriteRepository<Expense> writeExpensesRepository
+            , IReadRepository<User> readUsersRepository)
         {
             _writeExpensesRepository = writeExpensesRepository;
+            _readUsersRepository = readUsersRepository;
         }
 
         public async Task<IExpenseEvent> ExecuteAsync(NewExpense newExpense)
@@ -28,6 +32,12 @@ namespace BTech.ExpenseSystem.Domain.UseCases
             if (string.IsNullOrWhiteSpace(newExpense.Comment))
             {
                 return new CommentIsMandatory("A comment is mandatory.");
+            }
+
+            if (!_readUsersRepository.Entities
+                .Any(u => newExpense.IdentityId == string.Concat(u.FirstName, " ", u.LastName)))
+            {
+                return new IdentityUnknown($"The user '{newExpense.IdentityId}' is unkown.");
             }
 
             var expenseToAdd = new Expense()

@@ -1,9 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BTech.ExpenseSystem.Domain.UseCases
 {
     public interface IReadRepository<TEntity>
     {
-        Task<TEntity> GetAsync(string id);
+        IQueryable<TEntity> Entities { get; }
     }
 }
