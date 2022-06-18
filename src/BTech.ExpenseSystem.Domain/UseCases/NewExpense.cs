@@ -6,6 +6,7 @@ namespace BTech.ExpenseSystem.Domain.UseCases
         DateTimeOffset OperationDate
         , Amount Amount
         , string Nature
+        , string Comment
         , string IdentityId)
     {
     }

@@ -16,12 +16,13 @@ namespace BTech.ExpenseSytem.UnitTests
         {
             var repository = new InMemoryRepository<Expense>();
             var creator = new ExpensesCreator(repository);
-            string identityId = Guid.NewGuid().ToString();
+            string identityId = "Harry Potter";
 
             var result = await creator.ExecuteAsync(new NewExpense(
                 DateTimeOffset.UtcNow
                 , new Amount(10, null)
                 , ExpenseNature.Misc.ToString()
+                , "Expelliarmus !"
                 , identityId));
 
             Assert.IsType<ExpenseCreated>(result);
@@ -32,12 +33,30 @@ namespace BTech.ExpenseSytem.UnitTests
         {
             var repository = new InMemoryRepository<Expense>();
             var creator = new ExpensesCreator(repository);
-            string identityId = Guid.NewGuid().ToString();
+            string identityId = "Harry Potter";
 
             var result = await creator.ExecuteAsync(new NewExpense(
                 DateTimeOffset.UtcNow
                 , new Amount(10, null)
                 , string.Empty
+                , string.Empty
+                , identityId));
+
+            Assert.IsType<NatureNotFound>(result);
+        }
+
+        [Fact]
+        public async Task Execute_NewExpense_Without_Comment_MustNotBeCreated()
+        {
+            var repository = new InMemoryRepository<Expense>();
+            var creator = new ExpensesCreator(repository);
+            string identityId = "Harry Potter";
+
+            var result = await creator.ExecuteAsync(new NewExpense(
+                DateTimeOffset.UtcNow
+                , new Amount(10, null)
+                , "Misc"
+                , ""
                 , identityId));
 
             Assert.IsType<NatureNotFound>(result);

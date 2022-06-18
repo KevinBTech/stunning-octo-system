@@ -16,4 +16,8 @@
     public sealed record NatureNotFound(string Message) : IExpenseToCreateInErrorEvent
     {
     }
+
+    public sealed record CommentIsMandatory(string Message) : IExpenseToCreateInErrorEvent
+    {
+    }
 }

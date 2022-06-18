@@ -25,6 +25,11 @@ namespace BTech.ExpenseSystem.Domain.UseCases
                     $" Accepted values are {string.Join(", ", Enum.GetValues<ExpenseNature>())}.");
             }
 
+            if (string.IsNullOrWhiteSpace(newExpense.Comment))
+            {
+                return new CommentIsMandatory("A comment is mandatory.");
+            }
+
             var expenseToAdd = new Expense()
             {
                 Id = Guid.NewGuid().ToString(),
@@ -32,6 +37,7 @@ namespace BTech.ExpenseSystem.Domain.UseCases
                 Currency = newExpense.Amount.Currency,
                 OperationDate = newExpense.OperationDate,
                 Nature = parsedNature.ToString(),
+                Comment = parsedNature.ToString(),
                 IdentityId = newExpense.IdentityId
             };
 
