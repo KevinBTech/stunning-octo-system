@@ -4,11 +4,16 @@
     {
     }
 
+    public interface IExpenseToCreateInErrorEvent : IExpenseEvent
+    {
+        string Message { get; }
+    }
+
     public sealed record ExpenseCreated() : IExpenseEvent
     {
     }
 
-    public sealed record NewExpenseInError() : IExpenseEvent
+    public sealed record NatureNotFound(string Message) : IExpenseToCreateInErrorEvent
     {
     }
 }

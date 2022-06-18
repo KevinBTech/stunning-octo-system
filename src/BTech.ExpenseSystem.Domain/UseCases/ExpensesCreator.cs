@@ -1,4 +1,5 @@
 ﻿using BTech.ExpenseSystem.Domain.Entities;
+using BTech.ExpenseSystem.Domain.Enums;
 using BTech.ExpenseSystem.Domain.Events;
 using System;
 using System.Threading.Tasks;
@@ -16,12 +17,21 @@ namespace BTech.ExpenseSystem.Domain.UseCases
 
         public async Task<IExpenseEvent> ExecuteAsync(NewExpense newExpense)
         {
+            if (!Enum.TryParse(newExpense.Nature
+                , true
+                , out ExpenseNature parsedNature))
+            {
+                return new NatureNotFound("The given nature is not recognized." +
+                    $" Accepted values are {string.Join(", ", Enum.GetValues<ExpenseNature>())}.");
+            }
+
             var expenseToAdd = new Expense()
             {
                 Id = Guid.NewGuid().ToString(),
                 Amount = newExpense.Amount.Value,
                 Currency = newExpense.Amount.Currency,
                 OperationDate = newExpense.OperationDate,
+                Nature = parsedNature.ToString(),
                 IdentityId = newExpense.IdentityId
             };
 
