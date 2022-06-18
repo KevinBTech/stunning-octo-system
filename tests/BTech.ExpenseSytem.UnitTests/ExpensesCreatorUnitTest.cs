@@ -59,7 +59,7 @@ namespace BTech.ExpenseSytem.UnitTests
                 , ""
                 , identityId));
 
-            Assert.IsType<NatureNotFound>(result);
+            Assert.IsType<CommentIsMandatory>(result);
         }
     }
 }
