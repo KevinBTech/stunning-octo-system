@@ -35,7 +35,7 @@ namespace BTech.ExpenseSystem.Domain.UseCases
             }
 
             if (!_readUsersRepository.Entities
-                .Any(u => newExpense.IdentityId == string.Concat(u.FirstName, " ", u.LastName)))
+                .Any(u => newExpense.IdentityId == u.Id))
             {
                 return new IdentityUnknown($"The user '{newExpense.IdentityId}' is unkown.");
             }
@@ -47,7 +47,7 @@ namespace BTech.ExpenseSystem.Domain.UseCases
                 Currency = newExpense.Amount.Currency,
                 OperationDate = newExpense.OperationDate,
                 Nature = parsedNature.ToString(),
-                Comment = parsedNature.ToString(),
+                Comment = newExpense.Comment,
                 IdentityId = newExpense.IdentityId
             };
 

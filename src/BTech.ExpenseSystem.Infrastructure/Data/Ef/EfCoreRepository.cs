@@ -4,7 +4,8 @@ using System.Threading.Tasks;
 
 namespace BTech.ExpenseSystem.Infrastructure.Data
 {
-    public class EfRepository<TEntity>
+    internal sealed class EfRepository<TEntity>
+
         : IWriteRepository<TEntity>,
         IReadRepository<TEntity>
         where TEntity : class
@@ -21,6 +22,7 @@ namespace BTech.ExpenseSystem.Infrastructure.Data
         public async Task AddAsync(TEntity entity)
         {
             await _context.Set<TEntity>().AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
     }
 }

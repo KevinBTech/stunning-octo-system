@@ -1,6 +1,5 @@
 using BTech.ExpenseSystem.Domain.UseCases;
 using BTech.ExpenseSystem.Infrastructure.DependenciesInjection;
-using BTech.ExpenseSystem.WebAPI.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -29,7 +28,8 @@ namespace BTech.ExpenseSystem.WebAPI
             });
 
             services.AddScoped<ExpensesCreator>();
-            services.AddRepositories();
+            services.AddScoped<ExpensesQuering>();
+            services.AddRepositories(Configuration.GetConnectionString("ExpenseSystem"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
