@@ -39,6 +39,7 @@ namespace BTech.ExpenseSystem.WebAPI.Controllers
             return @event switch
             {
                 ExpenseCreated => Ok(),
+                IExpenseToCreateInErrorEvent expenseToCreateInErrorEvent => BadRequest(expenseToCreateInErrorEvent.Message),
                 _ => BadRequest(),
             };
         }

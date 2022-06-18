@@ -18,10 +18,11 @@ namespace BTech.ExpenseSystem.Domain.UseCases
         public async Task<IExpenseEvent> ExecuteAsync(NewExpense newExpense)
         {
             if (!Enum.TryParse(newExpense.Nature
+                , true
                 , out ExpenseNature parsedNature))
             {
                 return new NatureNotFound("The given nature is not recognized." +
-                    $"Accepted values are {string.Join(",", Enum.GetValues<ExpenseNature>())}");
+                    $" Accepted values are {string.Join(", ", Enum.GetValues<ExpenseNature>())}.");
             }
 
             var expenseToAdd = new Expense()
