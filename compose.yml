@@ -6,6 +6,7 @@ services:
           dockerfile: web.Dockerfile
         environment:
             DOTNET_ENVIRONMENT: "Development"
+            ConnectionStrings__ExpenseSystem: "Server=db;Database=master;User=sa;Password=Your_password123;"
         ports:
             - "8000:80"
         depends_on:
