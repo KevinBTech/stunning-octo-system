@@ -63,6 +63,13 @@ namespace BTech.ExpenseSystem.Domain.UseCases
                 return new SameExpenseAlreadyExists("A similary expense already exists : same amount on the same operation date.");
             }
 
+            if (!user.Currency.Equals(
+                newExpense.Amount.Currency
+                , StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new IdentityCurrencyIsNotIdentical("The given currency is not the same as the given identity : it must be identical.");
+            }
+
             var expenseToAdd = new Expense()
             {
                 Id = Guid.NewGuid().ToString(),

@@ -31,7 +31,7 @@ namespace BTech.ExpenseSytem.UnitTests
 
             var result = await creator.ExecuteAsync(new NewExpense(
                 DateTimeOffset.UtcNow
-                , new Amount(10, null)
+                , new Amount(10, "witch money")
                 , ExpenseNature.Misc.ToString()
                 , "Expelliarmus !"
                 , identityId));
@@ -164,6 +164,36 @@ namespace BTech.ExpenseSytem.UnitTests
             var result = await creator.ExecuteAsync(newExpense);
 
             Assert.IsType<SameExpenseAlreadyExists>(result);
+        }
+
+        [Fact]
+        public async Task Execute_NewExpense_IdentityCurrencyIsNotIdentical_MustFail()
+        {
+            string identityId = "Harry Potter";
+            var expenseRepository = new InMemoryRepository<Expense>();
+            var userRepository = new InMemoryRepository<User>();
+            await userRepository.AddAsync(new User()
+            {
+                Id = identityId,
+                FirstName = "Harry",
+                LastName = "Potter",
+                Currency = "Witch money"
+            });
+            var newExpense = new NewExpense(
+                DateTimeOffset.UtcNow
+                , new Amount(10, "")
+                , ExpenseNature.Misc.ToString()
+                , "Expelliarmus !"
+                , identityId);
+
+            var creator = new ExpensesCreator(
+                expenseRepository
+                , userRepository
+                , expenseRepository);
+
+            var result = await creator.ExecuteAsync(newExpense);
+
+            Assert.IsType<IdentityCurrencyIsNotIdentical>(result);
         }
     }
 }
