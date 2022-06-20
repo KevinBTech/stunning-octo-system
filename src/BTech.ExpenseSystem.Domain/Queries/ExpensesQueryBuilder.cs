@@ -24,5 +24,19 @@ namespace BTech.ExpenseSystem.Domain.Queries
 
             return this;
         }
+
+        public ExpensesQueryBuilder OrderByAmount(bool isAscending = false)
+        {
+            if (isAscending)
+            {
+                _query = _query.OrderBy(e => e.Amount);
+            }
+            else
+            {
+                _query = _query.OrderByDescending(e => e.Amount);
+            }
+
+            return this;
+        }
     }
 }
