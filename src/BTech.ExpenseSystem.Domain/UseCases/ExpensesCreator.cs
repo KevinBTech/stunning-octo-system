@@ -11,12 +11,15 @@ namespace BTech.ExpenseSystem.Domain.UseCases
     {
         private readonly IWriteRepository<Expense> _writeExpensesRepository;
         private readonly IReadRepository<User> _readUsersRepository;
+        private readonly IReadRepository<Expense> _readExpensesRepository;
 
         public ExpensesCreator(IWriteRepository<Expense> writeExpensesRepository
-            , IReadRepository<User> readUsersRepository)
+            , IReadRepository<User> readUsersRepository
+            , IReadRepository<Expense> readExpensesRepository)
         {
             _writeExpensesRepository = writeExpensesRepository;
             _readUsersRepository = readUsersRepository;
+            _readExpensesRepository = readExpensesRepository;
         }
 
         public async Task<IExpenseEvent> ExecuteAsync(NewExpense newExpense)
@@ -34,8 +37,10 @@ namespace BTech.ExpenseSystem.Domain.UseCases
                 return new CommentIsMandatory("A comment is mandatory.");
             }
 
-            if (!_readUsersRepository.Entities
-                .Any(u => newExpense.IdentityId == u.Id))
+            var user = _readUsersRepository.Entities
+                .FirstOrDefault(u => newExpense.IdentityId == u.Id);
+
+            if (user is null)
             {
                 return new IdentityUnknown($"The user '{newExpense.IdentityId}' is unkown.");
             }
@@ -48,6 +53,14 @@ namespace BTech.ExpenseSystem.Domain.UseCases
             if (newExpense.OperationDate < DateTimeOffset.Now.AddMonths(-3))
             {
                 return new CanNotHaveADateOlderThan3Months("An expense can not be older than 3 months.");
+            }
+
+            if (_readExpensesRepository.Entities
+                .Any(e => e.IdentityId == user.Id
+                && e.Amount == newExpense.Amount.Value
+                && e.OperationDate == newExpense.OperationDate))
+            {
+                return new SameExpenseAlreadyExists("A similary expense already exists : same amount on the same operation date.");
             }
 
             var expenseToAdd = new Expense()

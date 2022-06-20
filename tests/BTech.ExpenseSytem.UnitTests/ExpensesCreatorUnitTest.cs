@@ -14,6 +14,7 @@ namespace BTech.ExpenseSytem.UnitTests
         [Fact]
         public async Task Execute_NewExpense_MustBeCreated()
         {
+            var expenseRepository = new InMemoryRepository<Expense>();
             var userRepository = new InMemoryRepository<User>();
             await userRepository.AddAsync(new User()
             {
@@ -23,8 +24,9 @@ namespace BTech.ExpenseSytem.UnitTests
                 Currency = "Witch money"
             });
             var creator = new ExpensesCreator(
-                new InMemoryRepository<Expense>()
-                , userRepository);
+                expenseRepository
+                , userRepository
+                , expenseRepository);
             string identityId = "Harry Potter";
 
             var result = await creator.ExecuteAsync(new NewExpense(
@@ -40,9 +42,11 @@ namespace BTech.ExpenseSytem.UnitTests
         [Fact]
         public async Task Execute_NewExpense_Without_ExistingNature_MustNotBeCreated()
         {
+            var expenseRepository = new InMemoryRepository<Expense>();
             var creator = new ExpensesCreator(
-                new InMemoryRepository<Expense>()
-                , new InMemoryRepository<User>());
+                expenseRepository
+                , new InMemoryRepository<User>()
+                , expenseRepository);
             string identityId = "Harry Potter";
 
             var result = await creator.ExecuteAsync(new NewExpense(
@@ -58,9 +62,11 @@ namespace BTech.ExpenseSytem.UnitTests
         [Fact]
         public async Task Execute_NewExpense_Without_Comment_MustNotBeCreated()
         {
+            var expenseRepository = new InMemoryRepository<Expense>();
             var creator = new ExpensesCreator(
-                new InMemoryRepository<Expense>()
-                , new InMemoryRepository<User>());
+                expenseRepository
+                , new InMemoryRepository<User>()
+                , expenseRepository);
             string identityId = "Harry Potter";
 
             var result = await creator.ExecuteAsync(new NewExpense(
@@ -76,9 +82,11 @@ namespace BTech.ExpenseSytem.UnitTests
         [Fact]
         public async Task Execute_NewExpense_Without_KownIdentity_MustNotBeCreated()
         {
+            var expenseRepository = new InMemoryRepository<Expense>();
             var creator = new ExpensesCreator(
-                new InMemoryRepository<Expense>()
-                , new InMemoryRepository<User>());
+                expenseRepository
+                , new InMemoryRepository<User>()
+                , expenseRepository);
             string identityId = "Harry Potter";
 
             var result = await creator.ExecuteAsync(new NewExpense(
@@ -94,6 +102,7 @@ namespace BTech.ExpenseSytem.UnitTests
         [Fact]
         public async Task Execute_NewExpense_CanNotHaveADateInFutur_MustFail()
         {
+            var expenseRepository = new InMemoryRepository<Expense>();
             var userRepository = new InMemoryRepository<User>();
             await userRepository.AddAsync(new User()
             {
@@ -103,8 +112,9 @@ namespace BTech.ExpenseSytem.UnitTests
                 Currency = "Witch money"
             });
             var creator = new ExpensesCreator(
-                new InMemoryRepository<Expense>()
-                , userRepository);
+                expenseRepository
+                , userRepository,
+                expenseRepository);
             string identityId = "Harry Potter";
 
             var result = await creator.ExecuteAsync(new NewExpense(
@@ -118,29 +128,42 @@ namespace BTech.ExpenseSytem.UnitTests
         }
 
         [Fact]
-        public async Task Execute_NewExpense_CanNotHaveADateOlderThan3Months_MustFail()
+        public async Task Execute_NewExpense_SameExpenseAlreadyExists_MustFail()
         {
+            string identityId = "Harry Potter";
+            var expenseRepository = new InMemoryRepository<Expense>();
             var userRepository = new InMemoryRepository<User>();
             await userRepository.AddAsync(new User()
             {
-                Id = "Harry Potter",
+                Id = identityId,
                 FirstName = "Harry",
                 LastName = "Potter",
                 Currency = "Witch money"
             });
-            var creator = new ExpensesCreator(
-                new InMemoryRepository<Expense>()
-                , userRepository);
-            string identityId = "Harry Potter";
-
-            var result = await creator.ExecuteAsync(new NewExpense(
-                DateTimeOffset.UtcNow.AddDays(-100)
+            var newExpense = new NewExpense(
+                DateTimeOffset.UtcNow
                 , new Amount(10, null)
                 , ExpenseNature.Misc.ToString()
                 , "Expelliarmus !"
-                , identityId));
+                , identityId);
+            await expenseRepository.AddAsync(new Expense()
+            {
+                OperationDate = newExpense.OperationDate,
+                Amount = newExpense.Amount.Value,
+                Currency = newExpense.Amount.Currency,
+                Nature = newExpense.Nature,
+                Comment = newExpense.Comment,
+                IdentityId = newExpense.IdentityId
+            });
 
-            Assert.IsType<CanNotHaveADateOlderThan3Months>(result);
+            var creator = new ExpensesCreator(
+                expenseRepository
+                , userRepository
+                , expenseRepository);
+
+            var result = await creator.ExecuteAsync(newExpense);
+
+            Assert.IsType<SameExpenseAlreadyExists>(result);
         }
     }
 }

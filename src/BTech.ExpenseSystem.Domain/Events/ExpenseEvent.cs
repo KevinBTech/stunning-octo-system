@@ -32,4 +32,8 @@
     public sealed record CanNotHaveADateOlderThan3Months(string Message) : IExpenseToCreateInErrorEvent
     {
     }
+
+    public sealed record SameExpenseAlreadyExists(string Message) : IExpenseToCreateInErrorEvent
+    {
+    }
 }
