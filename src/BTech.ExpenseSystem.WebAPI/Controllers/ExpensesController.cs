@@ -59,7 +59,9 @@ namespace BTech.ExpenseSystem.WebAPI.Controllers
         {
             var existingExpenses = _expensesQuering.ListFrom(new ExpensesSearch()
             {
-                IdentityId = expensesFilter.IdentityId
+                IdentityId = expensesFilter.IdentityId,
+                OrderBy = new OrderBy(expensesFilter.OrderByName
+                , expensesFilter.IsAscendingOrder)
             });
 
             var expensesList = new ExpensesList
