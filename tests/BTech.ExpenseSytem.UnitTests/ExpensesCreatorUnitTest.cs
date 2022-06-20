@@ -92,7 +92,7 @@ namespace BTech.ExpenseSytem.UnitTests
         }
 
         [Fact]
-        public async Task Execute_NewExpense_CanNotHaveADateInFutur_MustBeCreated()
+        public async Task Execute_NewExpense_CanNotHaveADateInFutur_MustFail()
         {
             var userRepository = new InMemoryRepository<User>();
             await userRepository.AddAsync(new User()
@@ -115,6 +115,32 @@ namespace BTech.ExpenseSytem.UnitTests
                 , identityId));
 
             Assert.IsType<CanNotHaveDateInFutur>(result);
+        }
+
+        [Fact]
+        public async Task Execute_NewExpense_CanNotHaveADateOlderThan3Months_MustFail()
+        {
+            var userRepository = new InMemoryRepository<User>();
+            await userRepository.AddAsync(new User()
+            {
+                Id = "Harry Potter",
+                FirstName = "Harry",
+                LastName = "Potter",
+                Currency = "Witch money"
+            });
+            var creator = new ExpensesCreator(
+                new InMemoryRepository<Expense>()
+                , userRepository);
+            string identityId = "Harry Potter";
+
+            var result = await creator.ExecuteAsync(new NewExpense(
+                DateTimeOffset.UtcNow.AddDays(-100)
+                , new Amount(10, null)
+                , ExpenseNature.Misc.ToString()
+                , "Expelliarmus !"
+                , identityId));
+
+            Assert.IsType<CanNotHaveADateOlderThan3Months>(result);
         }
     }
 }

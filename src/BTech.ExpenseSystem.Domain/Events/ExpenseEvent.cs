@@ -28,4 +28,8 @@
     public sealed record CanNotHaveDateInFutur(string Message) : IExpenseToCreateInErrorEvent
     {
     }
+
+    public sealed record CanNotHaveADateOlderThan3Months(string Message) : IExpenseToCreateInErrorEvent
+    {
+    }
 }

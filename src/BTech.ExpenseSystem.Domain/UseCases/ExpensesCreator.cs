@@ -42,7 +42,12 @@ namespace BTech.ExpenseSystem.Domain.UseCases
 
             if (newExpense.OperationDate > DateTimeOffset.Now)
             {
-                return new CanNotHaveDateInFutur("An expense cat not be in the futur.");
+                return new CanNotHaveDateInFutur("An expense can not be in the futur.");
+            }
+
+            if (newExpense.OperationDate < DateTimeOffset.Now.AddMonths(-3))
+            {
+                return new CanNotHaveADateOlderThan3Months("An expense can not be older than 3 months.");
             }
 
             var expenseToAdd = new Expense()
