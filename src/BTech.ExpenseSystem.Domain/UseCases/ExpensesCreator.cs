@@ -40,6 +40,11 @@ namespace BTech.ExpenseSystem.Domain.UseCases
                 return new IdentityUnknown($"The user '{newExpense.IdentityId}' is unkown.");
             }
 
+            if (newExpense.OperationDate > DateTimeOffset.Now)
+            {
+                return new CanNotHaveDateInFutur("An expense cat not be in the futur.");
+            }
+
             var expenseToAdd = new Expense()
             {
                 Id = Guid.NewGuid().ToString(),
