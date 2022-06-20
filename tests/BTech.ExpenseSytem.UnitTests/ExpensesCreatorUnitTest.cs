@@ -90,5 +90,31 @@ namespace BTech.ExpenseSytem.UnitTests
 
             Assert.IsType<IdentityUnknown>(result);
         }
+
+        [Fact]
+        public async Task Execute_NewExpense_CanNotHaveADateInFutur_MustBeCreated()
+        {
+            var userRepository = new InMemoryRepository<User>();
+            await userRepository.AddAsync(new User()
+            {
+                Id = "Harry Potter",
+                FirstName = "Harry",
+                LastName = "Potter",
+                Currency = "Witch money"
+            });
+            var creator = new ExpensesCreator(
+                new InMemoryRepository<Expense>()
+                , userRepository);
+            string identityId = "Harry Potter";
+
+            var result = await creator.ExecuteAsync(new NewExpense(
+                DateTimeOffset.UtcNow.AddDays(1)
+                , new Amount(10, null)
+                , ExpenseNature.Misc.ToString()
+                , "Expelliarmus !"
+                , identityId));
+
+            Assert.IsType<CanNotHaveDateInFutur>(result);
+        }
     }
 }

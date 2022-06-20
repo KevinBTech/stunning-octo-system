@@ -24,4 +24,8 @@
     public sealed record IdentityUnknown(string Message) : IExpenseToCreateInErrorEvent
     {
     }
+
+    public sealed record CanNotHaveDateInFutur(string Message) : IExpenseToCreateInErrorEvent
+    {
+    }
 }
