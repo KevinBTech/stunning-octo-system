@@ -28,6 +28,13 @@ namespace BTech.ExpenseSystem.Domain.UseCases
                 queryBuilder.OrderByAmount(expensesSearch.OrderBy.IsAscending);
             }
 
+            if (expensesSearch.OrderBy.Name.Equals(
+                nameof(Expense.OperationDate)
+                , System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                queryBuilder.OrderByOperationDate(expensesSearch.OrderBy.IsAscending);
+            }
+
             foreach (Expense expense in queryBuilder.Build().ToList())
             {
                 existingExpenses.Add(new ExistingExpense(

@@ -38,5 +38,19 @@ namespace BTech.ExpenseSystem.Domain.Queries
 
             return this;
         }
+
+        public ExpensesQueryBuilder OrderByOperationDate(bool isAscending = false)
+        {
+            if (isAscending)
+            {
+                _query = _query.OrderBy(e => e.OperationDate);
+            }
+            else
+            {
+                _query = _query.OrderByDescending(e => e.OperationDate);
+            }
+
+            return this;
+        }
     }
 }
