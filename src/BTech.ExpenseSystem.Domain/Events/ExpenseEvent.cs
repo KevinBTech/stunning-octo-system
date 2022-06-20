@@ -24,4 +24,20 @@
     public sealed record IdentityUnknown(string Message) : IExpenseToCreateInErrorEvent
     {
     }
+
+    public sealed record CanNotHaveDateInFutur(string Message) : IExpenseToCreateInErrorEvent
+    {
+    }
+
+    public sealed record CanNotHaveADateOlderThan3Months(string Message) : IExpenseToCreateInErrorEvent
+    {
+    }
+
+    public sealed record SameExpenseAlreadyExists(string Message) : IExpenseToCreateInErrorEvent
+    {
+    }
+
+    public sealed record IdentityCurrencyIsNotIdentical(string Message) : IExpenseToCreateInErrorEvent
+    {
+    }
 }
